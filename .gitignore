@@ -1,3 +1,5 @@
 StringExtensions/bin/
 StringExtensions/obj/
+StringExtensions.Test/bin/
+StringExtensions.Test/obj/
 *.suo

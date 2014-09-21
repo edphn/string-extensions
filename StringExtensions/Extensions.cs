@@ -23,7 +23,7 @@ namespace StringExtensions
             throw new NotImplementedException();
         }
 
-        public static int CountrSubstring(this string instance)
+        public static int CountSubstring(this string instance)
         {
             throw new NotImplementedException();
         }
@@ -33,14 +33,18 @@ namespace StringExtensions
             throw new NotImplementedException();
         }
 
-        public static string EnsureLeft(this string instance)
+        public static string EnsureLeft(this string instance, string prefix)
         {
-            throw new NotImplementedException();
+            if (!instance.StartsWith(prefix)) return instance.Insert(0, prefix);
+
+            return instance;
         }
 
-        public static string EnsureRight(this string instance)
+        public static string EnsureRight(this string instance, string suffix)
         {
-            throw new NotImplementedException();
+            if (!instance.EndsWith(suffix)) return instance.Insert(instance.Length, suffix);
+
+            return instance;
         }
 
         public static string Humanize(this string instance)
@@ -53,34 +57,35 @@ namespace StringExtensions
             throw new NotImplementedException();
         }
 
-        public static bool IsAlphanumeric(this string intance)
+        public static bool IsAlphanumeric(this string instance)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsHexadecimal(this string intance)
+        public static bool IsHexadecimal(this string instance)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsJson(this string intance)
+        public static bool IsJson(this string instance)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsLowerCase(this string intance)
+        public static bool IsLowerCase(this string instance)
         {
             throw new NotImplementedException();
         }
 
-        public static bool IsUpperCase(this string intance)
+        public static bool IsUpperCase(this string instance)
         {
             throw new NotImplementedException();
         }
 
-        public static string LowerCaseFirst(this string intance)
+        public static string LowerCaseFirst(this string instance)
         {
-            throw new NotImplementedException();
+            // What with spaces at the beginning and numbers for instance.
+            return Char.ToLowerInvariant(instance[0]).ToString() + instance.Substring(1);
         }
 
         public static string RemoveLeft(this string instance)
@@ -138,7 +143,7 @@ namespace StringExtensions
             throw new NotImplementedException();
         }
 
-        public static string Undercored(this string instance)
+        public static string Underscored(this string instance)
         {
             throw new NotImplementedException();
         }
