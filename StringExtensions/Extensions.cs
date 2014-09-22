@@ -37,29 +37,29 @@ namespace StringExtensions
         }
 
         /// <summary>
-        /// Ensures that the string begins with given prefix. If it does
+        /// Ensures that the string begins with given substring. If it does
         /// not, then it's prepended.
         /// </summary>
         /// <param name="instance">String instance.</param>
-        /// <param name="prefix">The prefix to add if not present.</param>
-        /// <returns>Prefixed string.</returns>
-        public static string EnsureLeft(this string instance, string prefix)
+        /// <param name="substring">The substring to add if not present.</param>
+        /// <returns>String prefixed by the substring.</returns>
+        public static string EnsureLeft(this string instance, string substring)
         {
-            if (!instance.StartsWith(prefix)) return instance.Insert(0, prefix);
+            if (!instance.StartsWith(substring)) return instance.Insert(0, substring);
 
             return instance;
         }
 
         /// <summary>
-        /// Ensures that the string ends with given suffix. If it does 
+        /// Ensures that the string ends with given substring. If it does 
         /// not, then it's appended.
         /// </summary>
         /// <param name="instance">String instance.</param>
-        /// <param name="suffix">The suffix to add if not present.</param>
-        /// <returns>Suffixed string.</returns>
-        public static string EnsureRight(this string instance, string suffix)
+        /// <param name="substring">The substring to add if not present.</param>
+        /// <returns>String suffixed by the substring.</returns>
+        public static string EnsureRight(this string instance, string substring)
         {
-            if (!instance.EndsWith(suffix)) return instance.Insert(instance.Length, suffix);
+            if (!instance.EndsWith(substring)) return instance.Insert(instance.Length, substring);
 
             return instance;
         }
@@ -165,9 +165,22 @@ namespace StringExtensions
             throw new NotImplementedException();
         }
 
-        public static string Truncate(this string instance)
+        /// <summary>
+        /// Truncates the string to a given length. If substring is provided, and
+        /// truncating occurs, the string is further truncated so that the substring
+        /// may be appended without exceeding the desired length.
+        /// </summary>
+        /// <param name="instance">String instance.</param>
+        /// <param name="length">Desired length of the truncated string.</param>
+        /// <param name="substring">The substring to append if it can fit.</param>
+        /// <returns>String after truncating.</returns>
+        public static string Truncate(this string instance, int length, string substring = "")
         {
-            throw new NotImplementedException();
+            if (length >= instance.Length) return instance;
+
+            length = length - substring.Length;
+
+            return string.Concat(instance.Substring(0, length), substring);
         }
 
         public static string UpperCaseFirst(this string instance)

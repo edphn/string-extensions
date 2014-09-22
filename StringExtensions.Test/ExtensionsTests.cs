@@ -49,6 +49,24 @@ namespace StringExtensions.Test
         public void SurroundWorksProperly()
         {
             Assert.AreEqual("__foobar__", "foobar".Surround("__"));
+            Assert.AreEqual("__", "".Surround("_"));
+            Assert.AreEqual("test", "test".Surround(""));
+        }
+
+        [TestMethod]
+        public void TruncateWorksProperly()
+        {
+            Assert.AreEqual("Test foo bar", "Test foo bar".Truncate(12));
+            Assert.AreEqual("Test foo ba", "Test foo bar".Truncate(11));
+            Assert.AreEqual("Test foo", "Test foo bar".Truncate(8));
+            Assert.AreEqual("Test fo", "Test foo bar".Truncate(7));
+            Assert.AreEqual("Test", "Test foo bar".Truncate(4));
+            Assert.AreEqual("Test foo bar", "Test foo bar".Truncate(12, "..."));
+            Assert.AreEqual("Test foo...", "Test foo bar".Truncate(11, "..."));
+            Assert.AreEqual("Test ...", "Test foo bar".Truncate(8, "..."));
+            Assert.AreEqual("Test...", "Test foo bar".Truncate(7, "..."));
+            Assert.AreEqual("T...", "Test foo bar".Truncate(4, "..."));
+            Assert.AreEqual("Test fo....", "Test foo bar".Truncate(11, "...."));
         }
     }
 }
