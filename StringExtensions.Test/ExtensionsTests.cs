@@ -8,10 +8,19 @@ namespace StringExtensions.Test
     public class ExtensionsTests
     {
         [TestMethod]
+        public void CountSubstringWorksProperly()
+        {
+            Assert.AreEqual(2, "foobarfoobar".CountSubstring("foo"));
+            Assert.AreEqual(0, "foo".CountSubstring("bar"));
+            Assert.AreEqual(1, "foo".CountSubstring("FOO", false));
+            Assert.AreNotEqual(1, "foo".CountSubstring("FOO"));
+        }
+
+        [TestMethod]
         public void EnsureLeftWorksProperly()
         {
-            Assert.AreEqual("www.acme.com", "acme.com".EnsureLeft("www."));
-            Assert.AreEqual("www.acme.com", "www.acme.com".EnsureLeft("www."));
+            Assert.AreEqual("foobar", "foobar".EnsureLeft("foo"));
+            Assert.AreEqual("www.foobar", "foobar".EnsureLeft("www."));
         }
 
         [TestMethod]
@@ -19,15 +28,27 @@ namespace StringExtensions.Test
         {
             Assert.AreEqual("acme.com", "acme".EnsureRight(".com"));
             Assert.AreEqual("acme.com", "acme.com".EnsureRight(".com"));
-            Assert.AreEqual("acme.com", "acme.com".EnsureRight(".com"));
         }
 
         [TestMethod]
-        public void LowerCaseFirstWorksProperly()
+        public void IsAlphaWorksProperly()
         {
-            Assert.AreEqual("test", "test".LowerCaseFirst());
-            Assert.AreEqual("test", "Test".LowerCaseFirst());
-            Assert.AreEqual("1test", "1test".LowerCaseFirst());
+            Assert.IsTrue("foobar".IsAlpha());
+            Assert.IsFalse("12foobar".IsAlpha());
+            Assert.IsFalse("f-oobar".IsAlpha());
+        }
+
+        [TestMethod]
+        public void IsAlphanumericWorksProperly()
+        {
+            Assert.IsTrue("foobar123".IsAlphanumeric());
+            Assert.IsFalse("foobar-123".IsAlphanumeric());
+        }
+
+        [TestMethod]
+        public void SurroundWorksProperly()
+        {
+            Assert.AreEqual("__foobar__", "foobar".Surround("__"));
         }
     }
 }
