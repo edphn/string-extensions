@@ -8,27 +8,94 @@ namespace StringExtensions.Test
     public class ExtensionsTests
     {
         [TestMethod]
-        public void ToUpperFirstWorksProperly()
+        public void CamelizeWorksProperly()
         {
-            Assert.AreEqual("Test", "Test".ToUpperFirst());
-            Assert.AreEqual("Test", "test".ToUpperFirst());
-            Assert.AreEqual("1a", "1a".ToUpperFirst());
-            Assert.AreEqual("Σ test", "σ test".ToUpperFirst());
-            Assert.AreEqual(" σ test", " σ test".ToUpperFirst());
-            Assert.AreEqual("", "".ToUpperFirst());
-            Assert.AreEqual("A", "a".ToUpperFirst());
+            Assert.AreEqual("camelCase", "CamelCase".Camelize());
+            Assert.AreEqual("camelCase", "Camel-Case".Camelize());
+            Assert.AreEqual("camelCase", "camel case".Camelize());
+            Assert.AreEqual("camelCase", "camel -case".Camelize());
+            Assert.AreEqual("camelCase", "camel - case".Camelize());
+            Assert.AreEqual("camelCase", "camel_case".Camelize());
+            Assert.AreEqual("camelCTest", "camel c test".Camelize());
+            Assert.AreEqual("stringWith1Number", "string_with1number".Camelize());
+            Assert.AreEqual("stringWith22Numbers", "string-with-2-2 numbers".Camelize());
+            Assert.AreEqual("1Camel2Case", "1camel2case".Camelize());
+            Assert.AreEqual("camelΣase", "camel σase".Camelize());
+            Assert.AreEqual("στανιλCase", "Στανιλ case".Camelize());
+            Assert.AreEqual("σamelCase", "σamel  Case".Camelize());
         }
 
         [TestMethod]
-        public void ToLowerFirstWorksProperly()
+        public void CollapseWhitespaceWorksProperly()
         {
-            Assert.AreEqual("test", "Test".ToLowerFirst());
-            Assert.AreEqual("test", "test".ToLowerFirst());
-            Assert.AreEqual("1a", "1a".ToLowerFirst());
-            Assert.AreEqual("σ test", "Σ test".ToLowerFirst());
-            Assert.AreEqual(" Σ test", " Σ test".ToLowerFirst());
-            Assert.AreEqual("", "".ToLowerFirst());
-            Assert.AreEqual("a", "A".ToLowerFirst());
+            Assert.AreEqual("foo bar", "  foo   bar  ".CollapseWhitespace());
+            Assert.AreEqual("test string", "test string".CollapseWhitespace());
+            Assert.AreEqual("Ο συγγραφέας", "   Ο     συγγραφέας  ".CollapseWhitespace());
+            Assert.AreEqual("123", " 123 ".CollapseWhitespace());
+            Assert.AreEqual("1 2 3", "　　1　　2　　3　　".CollapseWhitespace());
+            Assert.AreEqual("", "   ".CollapseWhitespace());
+            Assert.AreEqual("", " ".CollapseWhitespace());
+            Assert.AreEqual("", "".CollapseWhitespace());
+        }
+
+        [TestMethod]
+        public void CountSubstringWorksProperly()
+        {
+            Assert.AreEqual(0, "".CountSubstring("foo"));
+            Assert.AreEqual(0, "foo".CountSubstring("bar"));
+            Assert.AreEqual(1, "foo bar".CountSubstring("foo"));
+            Assert.AreEqual(2, "foo bar".CountSubstring("o"));
+            Assert.AreEqual(0, "".CountSubstring("fòô"));
+            Assert.AreEqual(0, "fòô".CountSubstring("bàř"));
+            Assert.AreEqual(1, "fòô bàř".CountSubstring("fòô"));
+            Assert.AreEqual(2, "fôòô bàř".CountSubstring("ô"));
+            Assert.AreEqual(0, "fÔÒÔ bàř".CountSubstring("ô"));
+            Assert.AreEqual(0, "foo".CountSubstring("BAR", false));
+            Assert.AreEqual(1, "foo bar".CountSubstring("FOo", false));
+            Assert.AreEqual(2, "foo bar".CountSubstring("O", false));
+            Assert.AreEqual(1, "fòô bàř".CountSubstring("fÒÔ", false));
+            Assert.AreEqual(2, "fôòô bàř".CountSubstring("Ô", false));
+        }
+
+        [TestMethod]
+        public void DasherizeWorksProperly()
+        {
+        }
+
+        [TestMethod]
+        public void EnsureLeftWorksProperly()
+        {
+            Assert.AreEqual("foobar", "foobar".EnsureLeft("f"));
+            Assert.AreEqual("foobar", "foobar".EnsureLeft("foo"));
+            Assert.AreEqual("foo/foobar", "foobar".EnsureLeft("foo/"));
+            Assert.AreEqual("http://foobar", "foobar".EnsureLeft("http://"));
+            Assert.AreEqual("http://foobar", "http://foobar".EnsureLeft("http://"));
+            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureLeft("f"));
+            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureLeft("fòô"));
+            Assert.AreEqual("fòô/fòôbàř", "fòôbàř".EnsureLeft("fòô/"));
+            Assert.AreEqual("http://fòôbàř", "fòôbàř".EnsureLeft("http://"));
+            Assert.AreEqual("http://fòôbàř", "http://fòôbàř".EnsureLeft("http://"));
+        }
+
+        [TestMethod]
+        public void EnsureRightWorksProperly()
+        {
+            Assert.AreEqual("foobar", "foobar".EnsureRight("r"));
+            Assert.AreEqual("foobar", "foobar".EnsureRight("bar"));
+            Assert.AreEqual("foobar/bar", "foobar".EnsureRight("/bar"));
+            Assert.AreEqual("foobar.com/", "foobar".EnsureRight(".com/"));
+            Assert.AreEqual("foobar.com/", "foobar.com/".EnsureRight(".com/"));
+            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureRight("ř"));
+            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureRight("bàř"));
+            Assert.AreEqual("fòôbàř/bàř", "fòôbàř".EnsureRight("/bàř"));
+            Assert.AreEqual("fòôbàř.com/", "fòôbàř".EnsureRight(".com/"));
+            Assert.AreEqual("fòôbàř.com/", "fòôbàř.com/".EnsureRight(".com/"));
+        }
+
+        [TestMethod]
+        public void HumanizeWorksProperly()
+        {
+
         }
 
         [TestMethod]
@@ -65,19 +132,6 @@ namespace StringExtensions.Test
         }
 
         [TestMethod]
-        public void IsUpperWorksProperly()
-        {
-            Assert.AreEqual(true, "".IsUpper());
-            Assert.AreEqual(true, "FOOBAR".IsUpper());
-            Assert.AreEqual(false, "FOO BAR".IsUpper());
-            Assert.AreEqual(false, "fOOBAR".IsUpper());
-            Assert.AreEqual(true, "FÒÔBÀŘ".IsUpper());
-            Assert.AreEqual(false, "FÒÔBÀŘ2".IsUpper());
-            Assert.AreEqual(false, "FÒÔ BÀŘ".IsUpper());
-            Assert.AreEqual(false, "FÒÔBàř".IsUpper());
-        }
-
-        [TestMethod]
         public void IsLowerWorksProperly()
         {
             Assert.AreEqual(true, "".IsLower());
@@ -91,33 +145,44 @@ namespace StringExtensions.Test
         }
 
         [TestMethod]
-        public void EnsureLeftWorksProperly()
+        public void IsUpperWorksProperly()
         {
-            Assert.AreEqual("foobar", "foobar".EnsureLeft("f"));
-            Assert.AreEqual("foobar", "foobar".EnsureLeft("foo"));
-            Assert.AreEqual("foo/foobar", "foobar".EnsureLeft("foo/"));
-            Assert.AreEqual("http://foobar", "foobar".EnsureLeft("http://"));
-            Assert.AreEqual("http://foobar", "http://foobar".EnsureLeft("http://"));
-            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureLeft("f"));
-            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureLeft("fòô"));
-            Assert.AreEqual("fòô/fòôbàř", "fòôbàř".EnsureLeft("fòô/"));
-            Assert.AreEqual("http://fòôbàř", "fòôbàř".EnsureLeft("http://"));
-            Assert.AreEqual("http://fòôbàř", "http://fòôbàř".EnsureLeft("http://"));
+            Assert.AreEqual(true, "".IsUpper());
+            Assert.AreEqual(true, "FOOBAR".IsUpper());
+            Assert.AreEqual(false, "FOO BAR".IsUpper());
+            Assert.AreEqual(false, "fOOBAR".IsUpper());
+            Assert.AreEqual(true, "FÒÔBÀŘ".IsUpper());
+            Assert.AreEqual(false, "FÒÔBÀŘ2".IsUpper());
+            Assert.AreEqual(false, "FÒÔ BÀŘ".IsUpper());
+            Assert.AreEqual(false, "FÒÔBàř".IsUpper());
         }
 
         [TestMethod]
-        public void EnsureRightWorksProperly()
+        public void PascalizeWorksProperly()
         {
-            Assert.AreEqual("foobar", "foobar".EnsureRight("r"));
-            Assert.AreEqual("foobar", "foobar".EnsureRight("bar"));
-            Assert.AreEqual("foobar/bar", "foobar".EnsureRight("/bar"));
-            Assert.AreEqual("foobar.com/", "foobar".EnsureRight(".com/"));
-            Assert.AreEqual("foobar.com/", "foobar.com/".EnsureRight(".com/"));
-            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureRight("ř"));
-            Assert.AreEqual("fòôbàř", "fòôbàř".EnsureRight("bàř"));
-            Assert.AreEqual("fòôbàř/bàř", "fòôbàř".EnsureRight("/bàř"));
-            Assert.AreEqual("fòôbàř.com/", "fòôbàř".EnsureRight(".com/"));
-            Assert.AreEqual("fòôbàř.com/", "fòôbàř.com/".EnsureRight(".com/"));
+
+        }
+
+        [TestMethod]
+        public void SafeTruncateWorksProperly()
+        {
+
+        }
+
+        [TestMethod]
+        public void ShuffleWorksProperly()
+        {
+            string one = "foobar";
+            string two = " ";
+
+            Assert.AreEqual(one.Shuffle().Length, 6);
+            Assert.AreEqual(two.Shuffle().Length, 1);
+        }
+
+        [TestMethod]
+        public void SlugifyWorksProperly()
+        {
+
         }
 
         [TestMethod]
@@ -125,41 +190,48 @@ namespace StringExtensions.Test
         {
             Assert.AreEqual("__foobar__", "foobar".Surround("__"));
             Assert.AreEqual("test", "test".Surround(""));
-            Assert.AreEqual("**", "".Surround( "*"));
-            Assert.AreEqual("¬fòô bàř¬", "fòô bàř".Surround( "¬"));
-            Assert.AreEqual("ßå∆˚ test ßå∆˚", " test ".Surround( "ßå∆˚"));
+            Assert.AreEqual("**", "".Surround("*"));
+            Assert.AreEqual("¬fòô bàř¬", "fòô bàř".Surround("¬"));
+            Assert.AreEqual("ßå∆˚ test ßå∆˚", " test ".Surround("ßå∆˚"));
         }
 
         [TestMethod]
-        public void CollapseWhitespaceWorksProperly()
+        public void SwapCaseWorksProperly()
         {
-            Assert.AreEqual("foo bar", "  foo   bar  ".CollapseWhitespace());
-            Assert.AreEqual("test string", "test string".CollapseWhitespace());
-            Assert.AreEqual("Ο συγγραφέας", "   Ο     συγγραφέας  ".CollapseWhitespace());
-            Assert.AreEqual("123", " 123 ".CollapseWhitespace());
-            Assert.AreEqual("1 2 3", "　　1　　2　　3　　".CollapseWhitespace());
-            Assert.AreEqual("", "   ".CollapseWhitespace());
-            Assert.AreEqual("", " ".CollapseWhitespace());
-            Assert.AreEqual("", "".CollapseWhitespace());
+            Assert.AreEqual("TESTcASE", "testCase".SwapCase());
+            Assert.AreEqual("tEST-cASE", "Test-Case".SwapCase());
+            Assert.AreEqual(" - σASH  cASE", " - Σash  Case".SwapCase());
+            Assert.AreEqual("νΤΑΝΙΛ", "Ντανιλ".SwapCase());
         }
 
         [TestMethod]
-        public void CountSubstringWorksProperly()
+        public void TitleizeWorksProperly()
         {
-            Assert.AreEqual(0, "".CountSubstring("foo"));
-            Assert.AreEqual(0, "foo".CountSubstring("bar"));
-            Assert.AreEqual(1, "foo bar".CountSubstring("foo"));
-            Assert.AreEqual(2, "foo bar".CountSubstring("o"));
-            Assert.AreEqual(0, "".CountSubstring("fòô"));
-            Assert.AreEqual(0, "fòô".CountSubstring("bàř"));
-            Assert.AreEqual(1, "fòô bàř".CountSubstring("fòô"));
-            Assert.AreEqual(2, "fôòô bàř".CountSubstring("ô"));
-            Assert.AreEqual(0, "fÔÒÔ bàř".CountSubstring("ô"));
-            Assert.AreEqual(0, "foo".CountSubstring("BAR", false));
-            Assert.AreEqual(1, "foo bar".CountSubstring("FOo", false));
-            Assert.AreEqual(2, "foo bar".CountSubstring("O", false));
-            Assert.AreEqual(1, "fòô bàř".CountSubstring("fÒÔ", false));
-            Assert.AreEqual(2, "fôòô bàř".CountSubstring("Ô", false));
+
+        }
+
+        [TestMethod]
+        public void ToLowerFirstWorksProperly()
+        {
+            Assert.AreEqual("test", "Test".ToLowerFirst());
+            Assert.AreEqual("test", "test".ToLowerFirst());
+            Assert.AreEqual("1a", "1a".ToLowerFirst());
+            Assert.AreEqual("σ test", "Σ test".ToLowerFirst());
+            Assert.AreEqual(" Σ test", " Σ test".ToLowerFirst());
+            Assert.AreEqual("", "".ToLowerFirst());
+            Assert.AreEqual("a", "A".ToLowerFirst());
+        }
+
+        [TestMethod]
+        public void ToUpperFirstWorksProperly()
+        {
+            Assert.AreEqual("Test", "Test".ToUpperFirst());
+            Assert.AreEqual("Test", "test".ToUpperFirst());
+            Assert.AreEqual("1a", "1a".ToUpperFirst());
+            Assert.AreEqual("Σ test", "σ test".ToUpperFirst());
+            Assert.AreEqual(" σ test", " σ test".ToUpperFirst());
+            Assert.AreEqual("", "".ToUpperFirst());
+            Assert.AreEqual("A", "a".ToUpperFirst());
         }
 
         [TestMethod]
@@ -179,89 +251,7 @@ namespace StringExtensions.Test
         }
         
         [TestMethod]
-        public void SafeTruncateWorksProperly()
-        {
-        
-        }
-        
-        [TestMethod]
-        public void ShuffleWorksProperly()
-        {
-
-        }
-        
-        [TestMethod]
-        public void SwapCaseWorksProperly()
-        {
-
-        }
-        
-        [TestMethod]
-        // Incomplete
-        public void CamelizeWorksProperly()
-        {
-            Assert.AreEqual("camelCase", "CamelCase".Camelize());
-            Assert.AreEqual("camelCase", "Camel-Case".Camelize());
-            Assert.AreEqual("camelCase", "camel case".Camelize());
-            Assert.AreEqual("camelCase", "camel -case".Camelize());
-            Assert.AreEqual("camelCase", "camel - case".Camelize());
-            Assert.AreEqual("camelCase", "camel_case".Camelize());
-            Assert.AreEqual("camelCTest", "camel c test".Camelize());
-            Assert.AreEqual("stringWith1Number", "string_with1number".Camelize());
-            Assert.AreEqual("stringWith22Numbers", "string-with-2-2 numbers".Camelize());
-            Assert.AreEqual("1Camel2Case", "1camel2case".Camelize());
-            Assert.AreEqual("camelΣase", "camel σase".Camelize());
-            Assert.AreEqual("στανιλCase", "Στανιλ case".Camelize());
-            Assert.AreEqual("σamelCase", "σamel  Case".Camelize());
-        }
-        
-        [TestMethod]
-        public void PascalizeWorksProperly()
-        {
-
-        }
-        
-        [TestMethod]
-        // Incomplete
-        public void DasherizeWorksProperly()
-        {
-            Assert.AreEqual("test-case", "testCase".Dasherize());
-            Assert.AreEqual("test-case", "Test-Case".Dasherize());
-            Assert.AreEqual("test-case", "test case".Dasherize());
-            Assert.AreEqual("-test-case", "-test -case".Dasherize());
-            Assert.AreEqual("test-case", "test - case".Dasherize());
-            Assert.AreEqual("test-case", "test_case".Dasherize());
-            Assert.AreEqual("test-c-test", "test c test".Dasherize());
-            Assert.AreEqual("test-d-case", "TestDCase".Dasherize());
-            Assert.AreEqual("test-c-c-test", "TestCCTest".Dasherize());
-            Assert.AreEqual("string-with1number", "string_with1number".Dasherize());
-            Assert.AreEqual("string-with-2-2-numbers", "String-with_2_2 numbers".Dasherize());
-            Assert.AreEqual("1test2case", "1test2case".Dasherize());
-            Assert.AreEqual("dash-σase", "dash Σase".Dasherize());
-            Assert.AreEqual("στανιλ-case", "Στανιλ case".Dasherize());
-            Assert.AreEqual("σash-case", "Σash  Case".Dasherize());
-        }
-        
-        [TestMethod]
-        public void HumanizeWorksProperly()
-        {
-        
-        }
-        
-        [TestMethod]
-        public void TitleizeWorksProperly()
-        {
-
-        }
-        
-        [TestMethod]
         public void UnderscorizeWorksProperly()
-        {
-        
-        }
-        
-        [TestMethod]
-        public void SlugifyWorksProperly()
         {
         
         }
