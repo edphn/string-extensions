@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using StringExtensions;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace StringExtensions.Test
 {
@@ -263,8 +261,8 @@ namespace StringExtensions.Test
         {
             Assert.AreEqual("Title Case", "TITLE CASE".Titleize());
             Assert.AreEqual("Testing The Method", "testing the method".Titleize());
-            Assert.AreEqual("Testing the Method", "testing the method".Titleize(new string[] { "the" }));
-            Assert.AreEqual("I Like to Watch Dvds at Home", "i like to watch DVDs at home".Titleize(new string[] { "to", "at" }));
+            Assert.AreEqual("Testing the Method", "testing the method".Titleize(new[] { "the" }));
+            Assert.AreEqual("I Like to Watch Dvds at Home", "i like to watch DVDs at home".Titleize(new[] { "to", "at" }));
             Assert.AreEqual("Foo Bar", "foo bar".Titleize());
             Assert.AreEqual("Foo Bar", " foo_bar ".Titleize());
         }

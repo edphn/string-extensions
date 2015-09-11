@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace StringExtensions
 {
@@ -14,11 +12,11 @@ namespace StringExtensions
         /// spaces, capitalizes letters following digits, spaces, dashes and 
         /// underscores, and removes spaces, dashes, as well as underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String in camelCase format</returns>
-        public static string Camelize(this string str)
+        public static string Camelize(this string source)
         {
-            string[] chunks = SplitIntoChunks(str);
+            string[] chunks = SplitIntoChunks(source);
             string camelizedString = string.Join(string.Empty, chunks.Select(x => x.ToUpperFirst())).ToLowerFirst();
 
             return Regex.Replace(camelizedString, @"[\d]+(.)?", c => c.ToString().ToUpper()).ToLowerFirst();
@@ -28,23 +26,23 @@ namespace StringExtensions
         /// Returns new trimmed string with replaced consecutive whitespace 
         /// characters with a single space (including tabs and newline characters).
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>Trimmed string with condensed whitespace</returns>
-        public static string CollapseWhitespace(this string str)
+        public static string CollapseWhitespace(this string source)
         {
-            return Regex.Replace(str.Trim(), @"\s+", " ");
+            return Regex.Replace(source.Trim(), @"\s+", " ");
         }
 
         /// <summary>
         /// Counts occurencies of given substring.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">The substring to search for</param>
         /// <param name="caseSensitive">Whether or not to enforce case-sensitivity</param>
         /// <returns>The number of substring occurencies</returns>
-        public static int CountSubstring(this string str, string substring, bool caseSensitive = true)
+        public static int CountSubstring(this string source, string substring, bool caseSensitive = true)
         {
-            return Regex.Matches(str, substring, caseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase).Count;
+            return Regex.Matches(source, substring, caseSensitive ? RegexOptions.None : RegexOptions.IgnoreCase).Count;
         }
 
         /// <summary>
@@ -52,11 +50,11 @@ namespace StringExtensions
         /// spaces, dashes and underscores. Dashes are inserted before capital 
         /// letters and in place of spaces and underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String in dash-case format</returns>
-        public static string Dasherize(this string str)
+        public static string Dasherize(this string source)
         {
-            return Delimit(str, "-");
+            return Delimit(source, "-");
         }
 
         /// <summary>
@@ -64,12 +62,12 @@ namespace StringExtensions
         /// surrounding spaces, dashes and underscores. Delimiters are inserted
         /// before capital letters and in place of spaces, dashes and underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="delimiter">String used as delimiter</param>
         /// <returns>String delimited by given delimiter</returns>
-        public static string Delimit(this string str, string delimiter)
+        public static string Delimit(this string source, string delimiter)
         {
-            string[] chunks = SplitIntoChunks(str);
+            string[] chunks = SplitIntoChunks(source);
 
             return JoinUsingDelimiter(delimiter, chunks);
         }
@@ -79,14 +77,12 @@ namespace StringExtensions
         /// then returns a new string in which a specified string is inserted at 
         /// the very first position in this instance.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">The substring to add if not present</param>
         /// <returns>String prefixed by the substring</returns>
-        public static string EnsureLeft(this string str, string value)
+        public static string EnsureLeft(this string source, string substring)
         {
-            if (!str.StartsWith(value)) return str.Insert(0, value);
-
-            return str;
+            return !source.StartsWith(substring) ? source.Insert(0, substring) : source;
         }
 
         /// <summary>
@@ -94,98 +90,96 @@ namespace StringExtensions
         /// then returns a new string in which a specified string is inserted at 
         /// the very last position in this instance.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">The substring to add if not present</param>
         /// <returns>String suffixed by the substring.</returns>
-        public static string EnsureRight(this string str, string substring)
+        public static string EnsureRight(this string source, string substring)
         {
-            if (!str.EndsWith(substring)) return str.Insert(str.Length, substring);
-
-            return str;
+            return !source.EndsWith(substring) ? source.Insert(source.Length, substring) : source;
         }
 
         /// <summary>
         /// Returns the first n characters of this string.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="numberOfCharacters">Number of characters to return</param>
         /// <returns>First n characters of this string</returns>
-        public static string FirstCharacters(this string str, int numberOfCharacters)
+        public static string FirstCharacters(this string source, int numberOfCharacters)
         {
-            return str.Substring(0, Math.Min(str.Length, numberOfCharacters < 0 ? 0 : numberOfCharacters));
+            return source.Substring(0, Math.Min(source.Length, numberOfCharacters < 0 ? 0 : numberOfCharacters));
         }
 
         /// <summary>
         /// Determines whether the string contains any lowercase character.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains at least one lowercase characters, false otherwise</returns>
-        public static bool HasLower(this string str)
+        public static bool HasLower(this string source)
         {
-            return str.Any(c => char.IsLower(c));
+            return source.Any(char.IsLower);
         }
 
         /// <summary>
         /// Determines whether the string contains any upper case character.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains at least one uppercase characters, false otherwise</returns>
-        public static bool HasUpper(this string str)
+        public static bool HasUpper(this string source)
         {
-            return str.Any(c => char.IsUpper(c));
+            return source.Any(char.IsUpper);
         }
 
         /// <summary>
         /// Determines whether the string contains only alphabetic characters.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains only alphabetic characters, false otherwise</returns>
-        public static bool IsAlpha(this string str)
+        public static bool IsAlpha(this string source)
         {
-            return str.All(Char.IsLetter);
+            return source.All(char.IsLetter);
         }
 
         /// <summary>
         /// Determines whether the string contains only alphanumeric characters.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains only alphanumeric characters, false otherwise</returns>
-        public static bool IsAlphanumeric(this string str)
+        public static bool IsAlphanumeric(this string source)
         {
-            return str.All(Char.IsLetterOrDigit);
+            return source.All(char.IsLetterOrDigit);
         }
 
         /// <summary>
         /// Determines whether the string contains only lowercase characters.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains only lowercase characters, false otherwise</returns>
-        public static bool IsLower(this string str)
+        public static bool IsLower(this string source)
         {
-            return str.All(Char.IsLower);
+            return source.All(char.IsLower);
         }
 
         /// <summary>
         /// Determines whether the string contains only uppercase characters.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>True if the string contains only uppercase characters, false otherwise</returns>
-        public static bool IsUpper(this string str)
+        public static bool IsUpper(this string source)
         {
-            return str.All(Char.IsUpper);
+            return source.All(char.IsUpper);
         }
 
         /// <summary>
         /// Returns the last n characters of this string.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="charactersQuantity">Number of characters to return</param>
         /// <returns>Last n characters of this string</returns>
-        public static string LastCharacters(this string str, int charactersQuantity)
+        public static string LastCharacters(this string source, int charactersQuantity)
         {
-            charactersQuantity = charactersQuantity > str.Length ? str.Length : charactersQuantity;
+            charactersQuantity = charactersQuantity > source.Length ? source.Length : charactersQuantity;
 
-            return str.Substring(Math.Min(str.Length - charactersQuantity, str.Length));
+            return source.Substring(Math.Min(source.Length - charactersQuantity, source.Length));
         }
 
         /// <summary>
@@ -193,54 +187,50 @@ namespace StringExtensions
         /// spaces, capitalizes letters following digits, spaces, dashes and 
         /// underscores, and removes spaces, dashes, as well as underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String in PascalCase format</returns>
-        public static string Pascalize(this string str)
+        public static string Pascalize(this string source)
         {
-            return str.Camelize().ToUpperFirst();
+            return source.Camelize().ToUpperFirst();
         }
 
         /// <summary>
         /// Returns a copy of this string with removed substring from the left side
         /// (if it exists).
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">Substring to remove from left side</param>
         /// <returns>String without substring from left side</returns>
-        public static string RemoveLeft(this string str, string substring)
+        public static string RemoveLeft(this string source, string substring)
         {
-            if (str.StartsWith(substring)) return str.Substring(substring.Length);
-
-            return str;
+            return source.StartsWith(substring) ? source.Substring(substring.Length) : source;
         }
 
         /// <summary>
         /// Returns a copy of this string with removed substring from the right side
         /// (if it exists).
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">Substring to remove from right side</param>
         /// <returns>String without substring from right side</returns>
-        public static string RemoveRight(this string str, string substring)
+        public static string RemoveRight(this string source, string substring)
         {
-            if (str.EndsWith(substring)) return str.Substring(0, str.Length - substring.Length);
-
-            return str;
+            return source.EndsWith(substring) ? source.Substring(0, source.Length - substring.Length) : source;
         }
 
         /// <summary>
         /// Returns a repeated string.
         /// </summary>
-        /// <param name="str">String</param>
-        /// <param name="multiplier">Number of repetitions</param>
+        /// <param name="source">Source string</param>
+        /// <param name="numberOfRepetitions">Number of repetitions</param>
         /// <returns>String repeated by given times</returns>
-        public static string Repeat(this string str, int numberOfRepetitions)
+        public static string Repeat(this string source, int numberOfRepetitions)
         {
-            StringBuilder repeatedString = new StringBuilder();
+            var repeatedString = new StringBuilder();
 
             for (var i = 0; i < numberOfRepetitions; i += 1)
             {
-                repeatedString.Append(str);
+                repeatedString.Append(source);
             }
 
             return repeatedString.ToString();
@@ -249,38 +239,38 @@ namespace StringExtensions
         /// <summary>
         /// Returns a copy of this string with shuffled characters.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String with shuffled characters</returns>
-        public static string Shuffle(this string str)
+        public static string Shuffle(this string source)
         {
-	        Random random = new Random();
+	        var random = new Random();
 
-            return new string(str.ToCharArray().OrderBy(s => (random.Next(2) % 2) == 0).ToArray());          
+            return new string(source.ToCharArray().OrderBy(s => (random.Next(2) % 2) == 0).ToArray());          
         }
 
         /// <summary>
         /// Returns a copy of this string surrounded by given substring.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="substring">Substring to prepend and append</param>
         /// <returns>String surrounded by substring</returns>
-        public static string Surround(this string instance, string substring)
+        public static string Surround(this string source, string substring)
         {
-            return instance.Insert(instance.Length, substring).Insert(0, substring);
+            return source.Insert(source.Length, substring).Insert(0, substring);
         }
 
         /// <summary>
         /// Returns a copy of this string with swapped case.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String with swapped case</returns>
-        public static string SwapCase(this string str)
+        public static string SwapCase(this string source)
         {
             var swappedString = new StringBuilder();
 
-            foreach (char c in str)
+            foreach (var c in source)
             {
-                swappedString.Append(Char.IsUpper(c) ? Char.ToLower(c) : Char.ToUpper(c));
+                swappedString.Append(char.IsUpper(c) ? char.ToLower(c) : char.ToUpper(c));
             }
 
             return swappedString.ToString();
@@ -292,17 +282,16 @@ namespace StringExtensions
         /// inserts spaces in place of dashes and underscores, trims surrounding 
         /// and removes spaces, dashes, as well as underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="ignoredWords">Array of word to ignore</param>
         /// <returns>String in Title Case format</returns>
         /// 
 
-        public static string Titleize(this string str, string[] ignoredWords = null)
+        public static string Titleize(this string source, string[] ignoredWords = null)
         {
             ignoredWords = ignoredWords ?? new string[] { };
 
-            string[] chunks = SplitIntoChunks(str.ToLower());
-            string[] lowercasedChunks = chunks.Select(s => s.ToLower()).ToArray<string>();
+            var chunks = SplitIntoChunks(source.ToLower());
 
             return string.Join(" ", chunks.Select(s => ignoredWords.Contains(s) ? s : s.ToUpperFirst()));
         }
@@ -312,44 +301,43 @@ namespace StringExtensions
         /// value is evaluated for "yes", "on", "true" (including uppercase versions)
         /// and all numbers greater than 0. Rest options is evaluated into false.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>Boolean representation of string</returns>
-        public static bool ToBoolean(this string str)
+        public static bool ToBoolean(this string source)
         {
-            int parsedString = 0;
+            int parsedString;
             string[] truthyValues = { "true", "yes", "on" };
 
-            if (string.IsNullOrWhiteSpace(str)) return false;
+            if (string.IsNullOrWhiteSpace(source)) return false;
 
-            if (truthyValues.Any(value => value == str || value.ToUpper() == str)) return true;
+            if (truthyValues.Any(value => value == source || value.ToUpper() == source)) return true;
 
-            Int32.TryParse(str, out parsedString);
-            if (parsedString > 0) return true;
+            int.TryParse(source, out parsedString);
 
-            return false;
+            return parsedString > 0;
         }
 
         /// <summary>
         /// Returns a copy of this string with first character converted to lowercase.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>Equivalent of the current string with first letter in lowercase</returns>
-        public static string ToLowerFirst(this string str)
+        public static string ToLowerFirst(this string source)
         {
-            return (str.Length > 0)
-                ? string.Concat(str[0].ToString().ToLower(), str.Substring(1))
+            return (source.Length > 0)
+                ? string.Concat(source[0].ToString().ToLower(), source.Substring(1))
                 : string.Empty;
         }
 
         /// <summary>
         /// Returns a copy of this string with first character converted to uppercase.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>Equivalent of the current string with first letter in uppercase</returns>
-        public static string ToUpperFirst(this string str)
+        public static string ToUpperFirst(this string source)
         {
-            return (str.Length > 0)
-                ? string.Concat(str[0].ToString().ToUpper(), str.Substring(1))
+            return (source.Length > 0)
+                ? string.Concat(source[0].ToString().ToUpper(), source.Substring(1))
                 : string.Empty;
         }
 
@@ -358,17 +346,17 @@ namespace StringExtensions
         /// truncating occurs, the string is further truncated so that the substring
         /// may be appended without exceeding the desired length.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <param name="length">Desired length of the truncated string</param>
         /// <param name="substring">The substring to append if it can fit</param>
         /// <returns>New string truncated to given length</returns>
-        public static string Truncate(this string str, int length, string substring = "")
+        public static string Truncate(this string source, int length, string substring = "")
         {
-            if (length >= str.Length) return str;
+            if (length >= source.Length) return source;
 
             length = length - substring.Length;
 
-            return string.Concat(str.Substring(0, length), substring);
+            return string.Concat(source.Substring(0, length), substring);
         }
 
         /// <summary>
@@ -376,24 +364,24 @@ namespace StringExtensions
         /// surrounding spaces, dashes and underscores. Underscores are inserted 
         /// before capital letters and in place of spaces and underscores.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>String in underscore_case format</returns>
         /// 
-        public static string Underscorize(this string instance)
+        public static string Underscorize(this string source)
         {
-            return Delimit(instance, "_");
+            return Delimit(source, "_");
         }
 
         /// <summary>
         /// Splits string into chunks. String is sliced before capital letters
         /// and in place of dashes, underscores and spaces.
         /// </summary>
-        /// <param name="str">String</param>
+        /// <param name="source">Source string</param>
         /// <returns>Array of strings</returns>
-        private static string[] SplitIntoChunks(string str)
+        private static string[] SplitIntoChunks(string source)
         {
-            string[] baseDelimiters = new string[] { " ", "_", "-" };
-            string instanceWithoutCamelCase = Regex.Replace(str, @"([A-Z])", " $1");
+            var baseDelimiters = new[] { " ", "_", "-" };
+            var instanceWithoutCamelCase = Regex.Replace(source, @"([A-Z])", " $1");
 
             return instanceWithoutCamelCase.Split(baseDelimiters, StringSplitOptions.RemoveEmptyEntries);
         }
@@ -406,11 +394,11 @@ namespace StringExtensions
         /// <returns>String joined using delimiter</returns>
         private static string JoinUsingDelimiter(string delimiter, string[] chunks)
         {
-            string gluedChunks = string.Join(delimiter.ToString(), chunks).Trim().ToLower();
-            string escapedDelimiter = Regex.Escape(delimiter);
-            string doubleDelimiterPattern = string.Format("{0}+", escapedDelimiter);
+            var gluedChunks = string.Join(delimiter, chunks).Trim().ToLower();
+            var escapedDelimiter = Regex.Escape(delimiter);
+            var doubleDelimiterPattern = string.Format("{0}+", escapedDelimiter);
 
-            return Regex.Replace(gluedChunks, @doubleDelimiterPattern, delimiter.ToString());
+            return Regex.Replace(gluedChunks, @doubleDelimiterPattern, delimiter);
         }
     }
 }
