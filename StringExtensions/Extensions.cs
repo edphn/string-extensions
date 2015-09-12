@@ -173,13 +173,13 @@ namespace StringExtensions
         /// Returns the last n characters of this string.
         /// </summary>
         /// <param name="source">Source string</param>
-        /// <param name="charactersQuantity">Number of characters to return</param>
+        /// <param name="numberOfCharacters">Number of characters to return</param>
         /// <returns>Last n characters of this string</returns>
-        public static string LastCharacters(this string source, int charactersQuantity)
+        public static string LastCharacters(this string source, int numberOfCharacters)
         {
-            charactersQuantity = charactersQuantity > source.Length ? source.Length : charactersQuantity;
+            numberOfCharacters = numberOfCharacters > source.Length ? source.Length : numberOfCharacters;
 
-            return source.Substring(Math.Min(source.Length - charactersQuantity, source.Length));
+            return source.Substring(Math.Min(source.Length - numberOfCharacters, source.Length));
         }
 
         /// <summary>
