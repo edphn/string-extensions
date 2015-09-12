@@ -1,9 +1,9 @@
 StringExtensions
 =================
 
-A PHP string manipulation library with multibyte support. Compatible with PHP
-5.3+, PHP 7, and HHVM. Refer to the [1.x branch](https://github.com/danielstjules/Stringy/tree/1.x)
-for older documentation.
+StringExtensions is a small pack of methods that provides better and more readable 
+way of manipulating strings in C#. This class is highly inspired by great library
+for PHP - [Stringy](https://github.com/danielstjules/Stringy) by Daniel St. Jules.
 
 ## Methods
 
@@ -270,3 +270,6 @@ before capital letters and in place of spaces and underscores.
 "testCase".Underscorize(); // "test_case"
 ```
 
+## License
+
+Released under the MIT License - see `LICENSE.txt` for details.
