@@ -95,7 +95,7 @@ Determines whether the string contains any lowercase character.
 
 ##### HasUpper()
 
-Determines whether the string contains any uppercase character
+Determines whether the string contains any uppercase characters.
 
 ```csharp
 "Foo bar".HasUpper(); // true
