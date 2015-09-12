@@ -75,7 +75,7 @@ namespace StringExtensions
         /// <summary>
         /// Ensures that the string begins with given substring. If it does not, 
         /// then returns a new string in which a specified string is inserted at 
-        /// the very first position in this instance.
+        /// the very first position.
         /// </summary>
         /// <param name="source">Source string</param>
         /// <param name="substring">The substring to add if not present</param>
@@ -88,7 +88,7 @@ namespace StringExtensions
         /// <summary>
         /// Ensures that the string ends with given substring. If it does not, 
         /// then returns a new string in which a specified string is inserted at 
-        /// the very last position in this instance.
+        /// the very last position.
         /// </summary>
         /// <param name="source">Source string</param>
         /// <param name="substring">The substring to add if not present</param>
@@ -381,9 +381,9 @@ namespace StringExtensions
         private static string[] SplitIntoChunks(string source)
         {
             var baseDelimiters = new[] { " ", "_", "-" };
-            var instanceWithoutCamelCase = Regex.Replace(source, @"([A-Z])", " $1");
+            var sourceWithoutCamelCase = Regex.Replace(source, @"([A-Z])", " $1");
 
-            return instanceWithoutCamelCase.Split(baseDelimiters, StringSplitOptions.RemoveEmptyEntries);
+            return sourceWithoutCamelCase.Split(baseDelimiters, StringSplitOptions.RemoveEmptyEntries);
         }
 
         /// <summary>
