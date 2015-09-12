@@ -120,7 +120,7 @@ namespace StringExtensions
         }
 
         /// <summary>
-        /// Determines whether the string contains any upper case character.
+        /// Determines whether the string contains any uppercase character.
         /// </summary>
         /// <param name="source">Source string</param>
         /// <returns>True if the string contains at least one uppercase characters, false otherwise</returns>
