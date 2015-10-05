@@ -208,7 +208,7 @@ Returns a copy of this string with swapped case.
 Returns a copy of this string in Title Case version. Capitalizes
 first letter of each word unless word is specified in ignored array,
 inserts spaces in place of dashes and underscores, trims surrounding 
-and removes spaces, dashes, as well as underscores.
+spaces, dashes, as well as underscores.
 
 ```csharp
 "TITLE CASE".Titleize(); // "Title Case"
