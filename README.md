@@ -1,7 +1,7 @@
 StringExtensions
 =================
 
-StringExtensions is a small pack of methods that provides better and more readable 
+StringExtensions is a small pack of methods that provides better and more readable
 way of manipulating strings in C#. This class is highly inspired by great library
 for PHP - [Stringy](https://github.com/danielstjules/Stringy) by Daniel St. Jules.
 
@@ -9,8 +9,8 @@ for PHP - [Stringy](https://github.com/danielstjules/Stringy) by Daniel St. Jule
 
 ##### Camelize()
 
-Returns a copy of this string in camelCase version. Trims surrounding 
-spaces, capitalizes letters following digits, spaces, dashes and 
+Returns a copy of this string in camelCase version. Trims surrounding
+spaces, capitalizes letters following digits, spaces, dashes and
 underscores, and removes spaces, dashes, as well as underscores.
 
 ```csharp
@@ -19,7 +19,7 @@ underscores, and removes spaces, dashes, as well as underscores.
 
 ##### CollapseWhitespace()
 
-Returns new trimmed string with replaced consecutive whitespace 
+Returns new trimmed string with replaced consecutive whitespace
 characters with a single space (including tabs and newline characters).
 
 ```csharp
@@ -36,8 +36,8 @@ Counts occurencies of given substring.
 
 ##### Dasherize()
 
-Returns a copy of this string in dash-case version. Trims surrounding 
-spaces, dashes and underscores. Dashes are inserted before capital 
+Returns a copy of this string in dash-case version. Trims surrounding
+spaces, dashes and underscores. Dashes are inserted before capital
 letters and in place of spaces and underscores.
 
 ```csharp
@@ -46,7 +46,7 @@ letters and in place of spaces and underscores.
 
 ##### Delimit(string delimiter)
 
-Returns a copy of this string delimited by given delimiter. Trims 
+Returns a copy of this string delimited by given delimiter. Trims
 surrounding spaces, dashes and underscores. Delimiters are inserted
 before capital letters and in place of spaces, dashes and underscores.
 
@@ -56,8 +56,8 @@ before capital letters and in place of spaces, dashes and underscores.
 
 ##### EnsureLeft(string substring)
 
-Ensures that the string begins with given substring. If it does not, 
-then returns a new string in which a specified string is inserted at 
+Ensures that the string begins with given substring. If it does not,
+then returns a new string in which a specified string is inserted at
 the very first position.
 
 ```csharp
@@ -67,8 +67,8 @@ the very first position.
 
 ##### EnsureRight(string substring)
 
-Ensures that the string ends with given substring. If it does not, 
-then returns a new string in which a specified string is inserted at 
+Ensures that the string ends with given substring. If it does not,
+then returns a new string in which a specified string is inserted at
 the very last position.
 
 ```csharp
@@ -145,8 +145,8 @@ Returns the last n characters of this string.
 
 ##### Pascalize()
 
-Returns a copy of this string in PascalCase version. Trims surrounding 
-spaces, capitalizes letters following digits, spaces, dashes and 
+Returns a copy of this string in PascalCase version. Trims surrounding
+spaces, capitalizes letters following digits, spaces, dashes and
 underscores, and removes spaces, dashes, as well as underscores.
 
 ```csharp
@@ -207,7 +207,7 @@ Returns a copy of this string with swapped case.
 
 Returns a copy of this string in Title Case version. Capitalizes
 first letter of each word unless word is specified in ignored array,
-inserts spaces in place of dashes and underscores, trims surrounding 
+inserts spaces in place of dashes and underscores, trims surrounding
 spaces, dashes, as well as underscores.
 
 ```csharp
@@ -262,8 +262,8 @@ may be appended without exceeding the desired length.
 
 ##### Underscorize()
 
-Returns a copy of this string in underscore_case version. Trims 
-surrounding spaces, dashes and underscores. Underscores are inserted 
+Returns a copy of this string in underscore_case version. Trims
+surrounding spaces, dashes and underscores. Underscores are inserted
 before capital letters and in place of spaces and underscores.
 
 ```csharp
@@ -272,4 +272,4 @@ before capital letters and in place of spaces and underscores.
 
 ## License
 
-Released under the MIT License - see `LICENSE.txt` for details.
+Released under the MIT License - see `LICENSE` for details.
