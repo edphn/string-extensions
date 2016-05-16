@@ -17,11 +17,11 @@ namespace StringExtensions
         /// <returns>Found substring</returns>
         public static string Between(this string source, string startDelimiter, string endDelimiter, int offset = 0)
         {
-            var startIndex = source.IndexOf(startDelimiter, offset);
+            var startIndex = source.IndexOf(startDelimiter, offset, StringComparison.Ordinal);
 
             if (startIndex == -1) return string.Empty;
 
-            var endIndex = source.IndexOf(endDelimiter, startIndex);
+            var endIndex = source.IndexOf(endDelimiter, startIndex, StringComparison.Ordinal);
 
             if (endIndex == -1) return string.Empty;
 
