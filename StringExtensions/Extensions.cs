@@ -264,7 +264,7 @@ namespace StringExtensions
         /// <returns>String with shuffled characters</returns>
         public static string Shuffle(this string source)
         {
-	        var random = new Random();
+            var random = new Random();
 
             return new string(source.ToCharArray().OrderBy(s => (random.Next(2) % 2) == 0).ToArray());          
         }
@@ -306,8 +306,6 @@ namespace StringExtensions
         /// <param name="source">Source string</param>
         /// <param name="ignoredWords">Array of word to ignore</param>
         /// <returns>String in Title Case format</returns>
-        /// 
-
         public static string Titleize(this string source, string[] ignoredWords = null)
         {
             ignoredWords = ignoredWords ?? new string[] { };
