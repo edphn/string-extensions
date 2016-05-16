@@ -8,6 +8,27 @@ namespace StringExtensions
     public static class Extensions
     {
         /// <summary>
+        /// Returns substring found between start and end delimiters.
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <param name="startDelimiter">Delimiter marking the start of searching</param>
+        /// <param name="endDelimiter">Delimiter marking the end of searching</param>
+        /// <param name="offset">Index from which to begin the search</param>
+        /// <returns>Found substring</returns>
+        public static string Between(this string source, string startDelimiter, string endDelimiter, int offset = 0)
+        {
+            var startIndex = source.IndexOf(startDelimiter, offset);
+
+            if (startIndex == -1) return string.Empty;
+
+            var endIndex = source.IndexOf(endDelimiter, startIndex);
+
+            if (endIndex == -1) return string.Empty;
+
+            return source.Substring(startIndex + 1, endIndex - startIndex - 1);
+        }
+
+        /// <summary>
         /// Returns a copy of this string in camelCase version. Trims surrounding 
         /// spaces, capitalizes letters following digits, spaces, dashes and 
         /// underscores, and removes spaces, dashes, as well as underscores.

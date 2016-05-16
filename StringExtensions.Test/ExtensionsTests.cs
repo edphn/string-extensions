@@ -6,6 +6,19 @@ namespace StringExtensions.Test
     public class ExtensionsTests
     {
         [TestMethod]
+        public void BetweenWorksProperly()
+        {
+            Assert.AreEqual("", "foo".Between("{", "}"));
+            Assert.AreEqual("", "{foo".Between("{", "}"));
+            Assert.AreEqual("foo", "{foo}".Between("{", "}"));
+            Assert.AreEqual("{foo", "{{foo}".Between("{", "}"));
+            Assert.AreEqual("", "{}foo}".Between("{", "}"));
+            Assert.AreEqual("foo", "}{foo}".Between("{", "}"));
+            Assert.AreEqual("foo", "A description of {foo} goes here".Between("{", "}"));
+            Assert.AreEqual("bar", "{foo} and {bar}".Between("{", "}", 1));
+        }
+
+        [TestMethod]
         public void CamelizeWorksProperly()
         {
             Assert.AreEqual("camelCase", "CamelCase".Camelize());
