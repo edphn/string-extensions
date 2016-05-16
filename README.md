@@ -7,6 +7,14 @@ for PHP - [Stringy](https://github.com/danielstjules/Stringy) by Daniel St. Jule
 
 ## Methods
 
+##### Between(string startDelimiter, string endDelimiter, [int offset = 0])
+
+Returns substring found between start and end delimiters.
+
+```csharp
+"A description of {foo} goes here".Between("{", "}") // "foo"
+```
+
 ##### Camelize()
 
 Returns a copy of this string in camelCase version. Trims surrounding
