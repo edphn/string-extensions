@@ -187,6 +187,14 @@ Returns a repeated string.
 "foo".Repeat(2)); // "foofoo"
 ```
 
+##### ReverseWords()
+
+Returns a copy of this string with reversed words.
+
+```csharp
+"foo bar".ReverseWords()); // "bar foo"
+```
+
 ##### Shuffle()
 
 Returns a copy of this string with shuffled characters.

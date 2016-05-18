@@ -245,6 +245,15 @@ namespace StringExtensions.Test
         }
 
         [TestMethod]
+        public void ReverseWordsWorksProperly()
+        {
+            Assert.AreEqual("", "".ReverseWords());
+            Assert.AreEqual("foo", "foo".ReverseWords());
+            Assert.AreEqual("foo bar", "bar foo".ReverseWords());
+            Assert.AreEqual("foo bar", " bar foo".ReverseWords());
+        }
+
+        [TestMethod]
         public void ShuffleWorksProperly()
         {
             string one = "foobar";

@@ -258,6 +258,18 @@ namespace StringExtensions
         }
 
         /// <summary>
+        /// Returns a copy of this string with reversed words.
+        /// </summary>
+        /// <param name="source">Source string</param>
+        /// <returns>String with reversed words</returns>
+        public static string ReverseWords(this string source)
+        {
+            var words = source.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+            return string.Join(" ", words.Reverse());
+        }
+
+        /// <summary>
         /// Returns a copy of this string with shuffled characters.
         /// </summary>
         /// <param name="source">Source string</param>
